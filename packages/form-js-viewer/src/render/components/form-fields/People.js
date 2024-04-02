@@ -8,9 +8,9 @@ import { sanitizeSingleSelectValue } from "../util/sanitizerUtil";
 import { createEmptyOptions } from "../util/optionsUtil";
 import { formFieldClasses } from "../Util";
 
-const type = "select";
+const type = "people";
 
-export function Select(props) {
+export function People(props) {
   const {
     disabled,
     errors = [],
@@ -67,10 +67,10 @@ export function Select(props) {
   );
 }
 
-Select.config = {
+People.config = {
   type,
   keyed: true,
-  label: "Dropdown",
+  label: "People",
   group: "basic-input",
   emptyValue: null,
   sanitizeValue: sanitizeSingleSelectValue,

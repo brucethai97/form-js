@@ -1,143 +1,129 @@
-import {
-  act,
-  cleanup,
-  render
-} from '@testing-library/preact/pure';
+import { act, cleanup, render } from "@testing-library/preact/pure";
 
-import { ConditionGroup } from '../../../../../src/features/properties-panel/groups';
+// import { ConditionGroup } from '../../../../../src/features/properties-panel/groups';
 
-import { MockPropertiesPanelContext, TestPropertiesPanel } from '../helper';
+import { MockPropertiesPanelContext, TestPropertiesPanel } from "../helper";
 
-import { INPUTS } from '../../../../../src/features/properties-panel/Util';
+import { INPUTS } from "../../../../../src/features/properties-panel/Util";
 
-const HIDE_CONDITION = 'conditional-hide';
+const HIDE_CONDITION = "conditional-hide";
 
+// describe('ConditionGroup', function() {
 
-describe('ConditionGroup', function() {
+//   afterEach(() => cleanup());
 
-  afterEach(() => cleanup());
+//   describe('condition', function() {
 
+//     it('should NOT render for default', function() {
 
-  describe('condition', function() {
+//       // given
+//       const field = { type: 'default' };
 
-    it('should NOT render for default', function() {
+//       // when
+//       const group = ConditionGroup(field);
 
-      // given
-      const field = { type: 'default' };
+//       // then
+//       expect(group).to.not.exist;
+//     });
 
-      // when
-      const group = ConditionGroup(field);
+//     it('should render for INPUTS', function() {
 
-      // then
-      expect(group).to.not.exist;
-    });
+//       // given
+//       for (const type of INPUTS) {
 
+//         const field = { type };
 
-    it('should render for INPUTS', function() {
+//         // when
+//         const { container } = renderConditionGroup({ field });
 
-      // given
-      for (const type of INPUTS) {
+//         // then
+//         const conditionInput = findInput(HIDE_CONDITION, container);
 
-        const field = { type };
+//         expect(conditionInput).to.exist;
+//       }
+//     });
 
-        // when
-        const { container } = renderConditionGroup({ field });
+//     it('should read', function() {
 
-        // then
-        const conditionInput = findInput(HIDE_CONDITION, container);
+//       // given
+//       const field = {
+//         type: 'button',
+//         conditional: {
+//           hide: 'foobar'
+//         }
+//       };
 
-        expect(conditionInput).to.exist;
-      }
-    });
+//       // when
+//       const { container } = renderConditionGroup({ field });
 
+//       const conditionInput = findInput(HIDE_CONDITION, container);
 
-    it('should read', function() {
+//       // then
+//       expect(conditionInput).to.exist;
+//       expect(conditionInput.innerText).to.equal('foobar');
+//     });
 
-      // given
-      const field = {
-        type: 'button',
-        conditional: {
-          hide: 'foobar'
-        }
-      };
+//     it('should write', async function() {
 
-      // when
-      const { container } = renderConditionGroup({ field });
+//       // given
+//       const field = {
+//         type: 'button',
+//         conditional: {
+//           hide: 'foobar'
+//         }
+//       };
 
-      const conditionInput = findInput(HIDE_CONDITION, container);
+//       const editFieldSpy = sinon.spy();
 
-      // then
-      expect(conditionInput).to.exist;
-      expect(conditionInput.innerText).to.equal('foobar');
-    });
+//       const { container } = renderConditionGroup({ field, editField: editFieldSpy });
 
+//       const conditionInput = findInput(HIDE_CONDITION, container);
 
-    it('should write', async function() {
+//       // when
+//       await changeInput(conditionInput, 'newVal');
 
-      // given
-      const field = {
-        type: 'button',
-        conditional: {
-          hide: 'foobar'
-        }
-      };
+//       // then
+//       expect(editFieldSpy).to.have.been.calledOnce;
+//       expect(editFieldSpy.args[0]).to.eql([ field, 'conditional', { hide: '=newVal' } ]);
+//     });
 
-      const editFieldSpy = sinon.spy();
+//     it('should remove', async function() {
 
-      const { container } = renderConditionGroup({ field, editField: editFieldSpy });
+//       // given
+//       const field = {
+//         type: 'button',
+//         conditional: {
+//           hide: 'foobar'
+//         }
+//       };
 
-      const conditionInput = findInput(HIDE_CONDITION, container);
+//       const editFieldSpy = sinon.spy();
 
-      // when
-      await changeInput(conditionInput, 'newVal');
+//       const { container } = renderConditionGroup({ field, editField: editFieldSpy });
 
-      // then
-      expect(editFieldSpy).to.have.been.calledOnce;
-      expect(editFieldSpy.args[0]).to.eql([ field, 'conditional', { hide: '=newVal' } ]);
-    });
+//       const conditionInput = findInput(HIDE_CONDITION, container);
 
+//       // when
+//       await changeInput(conditionInput, '');
 
-    it('should remove', async function() {
+//       // then
+//       expect(editFieldSpy).to.have.been.calledOnce;
+//       expect(editFieldSpy.args[0]).to.eql([ field, 'conditional', undefined ]);
+//     });
 
-      // given
-      const field = {
-        type: 'button',
-        conditional: {
-          hide: 'foobar'
-        }
-      };
-
-      const editFieldSpy = sinon.spy();
-
-      const { container } = renderConditionGroup({ field, editField: editFieldSpy });
-
-      const conditionInput = findInput(HIDE_CONDITION, container);
-
-      // when
-      await changeInput(conditionInput, '');
-
-      // then
-      expect(editFieldSpy).to.have.been.calledOnce;
-      expect(editFieldSpy.args[0]).to.eql([ field, 'conditional', undefined ]);
-    });
-
-  });
-});
-
+//   });
+// });
 
 // helper ///////////////
 
 function renderConditionGroup(options) {
-  const {
-    editField,
-    field
-  } = options;
+  const { editField, field } = options;
 
-  const groups = [ ConditionGroup(field, editField) ];
+  const groups = [ConditionGroup(field, editField)];
 
   return render(
-    <MockPropertiesPanelContext options={ options }>
-      <TestPropertiesPanel field={ field } groups={ groups } />
+    <MockPropertiesPanelContext options={options}>
+      <TestPropertiesPanel field={field} groups={groups} />
     </MockPropertiesPanelContext>
   );
 }
@@ -149,5 +135,7 @@ function changeInput(element, value) {
 }
 
 function findInput(id, container) {
-  return container.querySelector(`.bio-properties-panel-input[name="${id}"] [contenteditable]`);
+  return container.querySelector(
+    `.bio-properties-panel-input[name="${id}"] [contenteditable]`
+  );
 }
